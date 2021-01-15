@@ -108,7 +108,6 @@
 					}
 					$dexta = join("\\", $dext);
 					$url = $lk."$dexta\\$c";
-					echo "ext = ".$dexta;
 				}else{
 					$url = $lk.$c;
 				}
