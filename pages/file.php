@@ -102,7 +102,13 @@
 				$lk = "ftp://$da[uname]:$da[pass]@$server\\";
 				$c = urlencode($b);
 				if(isset($ext)){
-					$url = $lk."$ext\\$c";
+					$dext = explode("\\", $ext);
+					foreach ($dext as $k => $v) {
+						$dext[$k] = urlencode($v);
+					}
+					$dexta = join("\\", $dext);
+					$url = $lk."$dexta\\$c";
+					echo "ext = ".$dexta;
 				}else{
 					$url = $lk.$c;
 				}
