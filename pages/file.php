@@ -100,13 +100,15 @@
 			if(!is_dir($fl)){
 				$server = $_SERVER["SERVER_ADDR"]=="::1"?"127.0.0.1":$_SERVER["SERVER_ADDR"];
 				$lk = "ftp://$da[uname]:$da[pass]@$server\\";
-				$c = urlencode($b);
+				$c = $b;
+				/*$c = urlencode($b);*/
 				if(isset($ext)){
-					$dext = explode("\\", $ext);
+					/*$dext = explode("\\", $ext);
 					foreach ($dext as $k => $v) {
 						$dext[$k] = urlencode($v);
 					}
-					$dexta = join("\\", $dext);
+					$dexta = join("\\", $dext);*/
+					$dexta = $ext;
 					$url = $lk."$dexta\\$c";
 				}else{
 					$url = $lk.$c;
