@@ -1,3 +1,4 @@
+![alt text](https://raw.githubusercontent.com/WillyXevo/ftp/master/assets/img/icn.png "Screenshot")
 # FTP
 
 ## Getting Started

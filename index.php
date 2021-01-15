@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script> 
 </head>
 <body>
 	<div class="container">
@@ -28,7 +29,16 @@
 			  	</h1>
 			</div>
 		</div>
+		<!-- <a class="btn btn-success" href="index.php?turnon=true"> Turn On</a> -->
 		<?php
+			/*if(isset($_GET['turnon'])){
+				print_r($_GET);
+				//system("cmd /c C:xampp/htdocs/vid/ftp/filezilla_start.bat");
+				//exec("filezilla_start.bat");
+				exec('"C:\xampp\FileZillaFTP\FileZillaServer.exe" -start', $output);
+				var_dump($output);
+				//echo '<script>document.location="index.php";</script>';
+			}*/
 			$server = $_SERVER["SERVER_ADDR"]=="::1"?"127.0.0.1":$_SERVER["SERVER_ADDR"];
 			
 			$con = ftp_connect($server) or die("FTP Server mati!"); 
@@ -58,10 +68,10 @@
 								if($b == sizeof($a)-1){
 									$bdc .= "<li class='active'>".ucfirst($c)."</li>";
 								}else{
-									$tmp = $a;
-									unset($tmp[sizeof($a)-1]);
+									$tmp = array_slice($a, 0, $b+1);
 									$d = join("\\",$tmp);
-									$bdc .= "<li><a href=\"index.php?p=$l&dir=".e_url($d)."\">".ucfirst($c)."</a></li>";
+									$d = e_url($d);
+									$bdc .= "<li><a href=\"index.php?p=$l&id=$idd&dir=".$d."\">".ucfirst($c)."</a></li>";
 								}
 							}
 						}else{

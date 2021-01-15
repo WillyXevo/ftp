@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+
+    <script src="assets/js/sweetalert.min.js"></script> 
 </head>
 <body>
 	<div class="container">
@@ -49,7 +51,7 @@
 					$file = fopen("data.json","w");
 					fwrite($file,json_encode($tmp_data));
 					fclose($file);
-					echo msg("data berhasil ditambahkan!", "setting.php");
+					echo msg("Sukses", "data berhasil ditambahkan!", "success", "setting.php");
 				}else{
 					$tmp_data = $data;
 					$id = $_POST['id'];
@@ -64,7 +66,7 @@
 					$file = fopen("data.json","w");
 					fwrite($file,json_encode($tmp_data));
 					fclose($file);
-					echo msg("data berhasil diubah!", "setting.php");
+					echo msg("Sukses", "data berhasil diubah!", "success", "setting.php");
 				}
 			}
 		?>
@@ -88,7 +90,7 @@
 					$file = fopen("data.json","w");
 					fwrite($file,json_encode($tmp_data));
 					fclose($file);
-					echo msg("data berhasil dihapus!", "setting.php");
+					echo msg("Sukses", "data berhasil dihapus!", "success", "setting.php");
 				}
 			}
 		?>
@@ -116,7 +118,7 @@
 						<td><?= $v['uname']." | ".$v['pass'];?></td>
 						<td>
 							<a href="setting.php?ket=ubah&id=<?= $k; ?>" class="btn btn-sm btn-primary" title="Ubah Data"><i class="fa fa-pencil"></i></a>
-							<a href="setting.php?ket=hapus&id=<?= $k; ?>" class="btn btn-sm btn-danger" title="Hapus Data"><i class="fa fa-trash"></i></a>
+							<a href="setting.php?ket=hapus&id=<?= $k; ?>" class="btn btn-sm btn-danger btn-hapus" title="Hapus Data"><i class="fa fa-trash"></i></a>
 						</td>
 					</tr>
 				<?php
@@ -155,7 +157,24 @@
     <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script> 
     <script type="text/javascript">
     	$(document).ready(function(){
-    		
+    		//swal("Good job!", "You clicked the button!", "success");
+    		$(".btn-hapus").click(function(e){
+    			e.preventDefault();
+    			var href = $(this).attr("href");
+    			console.log(href);
+    			swal({
+				  	title: "Are you sure?",
+				  	text: "Once deleted, you will not be able to recover this data!",
+				  	icon: "warning",
+				  	buttons: true,
+				  	dangerMode: true,
+				})
+				.then((willDelete) => {
+				  	if (willDelete) {
+				    	window.location=href;
+				  	}
+				});
+    		});
     	});
     </script>
 </body>
@@ -163,10 +182,17 @@
 
 <?php
 
-	function msg($msg='', $url=""){
+	function msg($head="", $msg="", $type="success", $url=""){
 		$ret = "<script>
-					alert(\"$msg\");
-					window.location=\"$url\";
+					swal({
+					  	title: \"$head\",
+					  	text: \"$msg\",
+					  	icon: \"$type\",
+					  	buttons: false,
+					  	timer: 2000,
+					}).then(() => {
+						window.location=\"$url\";
+					});
 				</script>";
 		return $ret;
 	}

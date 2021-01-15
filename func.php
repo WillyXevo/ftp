@@ -58,6 +58,22 @@ function gen_vlc($name = "", $url = "", $fl = ""){
 	return $ret;
 }
 
+function gen_img($name = "", $url = "", $fl = ""){
+	$fz = formatSizeUnits(filesize($fl));
+	$tm = date("d M Y H:i:s", filemtime($fl));
+	$nz = strlen($name);
+	if($nz>20){
+		$name = substr($name, 0, 20)."...";
+	}
+	$ret = "<tr class=\"trimg\" data-href=\"$url\">
+				<td><i class=\"img-vlc\"><img src=\"assets/img/vlc.png\" ></i></td>
+				<td class=\"trvlc\"><a href=\"$url\">$name</a></td>
+				<td>$tm</td>
+				<td>$fz</td>
+			</tr>";
+	return $ret;
+}
+
 /*
 
 
@@ -108,6 +124,15 @@ function cek_vlc($name){
 	return false;
 }
 
+
+function cek_img($name){
+	$arr = ["JPG", "JPEG", "PNG", "GIF", "ICO"];
+	$fn = pathinfo($name, PATHINFO_EXTENSION);
+	if(in_array(strtoupper($fn), $arr)){
+		return true;
+	}
+	return false;
+}
 
  function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)
